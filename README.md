@@ -67,9 +67,3 @@ InjectBreakpoint(explorerPID, NtAllocateVirtualMemoryFunc,
 
 ## Detections
 0/38 on KleenScan
-
-For detailed information about the Windows internal functions used in this project:
-
-- Windows Internals, Part 1 (CPU Debug Registers)
-- Windows Internals, Part 2 (Native API)
-- Windows NT/2000 Native API Reference
