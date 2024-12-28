@@ -32,7 +32,6 @@ RtlCreateUserThread      // Thread creation
 
 ### Architecture Support
 - Supports x64 architecture
-- Architecture-specific handling for stack pointer access
 
 ## Technical Notes
 
@@ -53,18 +52,6 @@ Vectored exception handler processes EXCEPTION_SINGLE_STEP exceptions for addres
 ```c
 LONG WINAPI VectoredHandler(PEXCEPTION_POINTERS pExceptionInfo)
 ```
-
-## Usage Example
-
-```c
-DWORD explorerPID = FindExplorerPID();
-if (!explorerPID) return 1;
-
-InjectBreakpoint(explorerPID, NtAllocateVirtualMemoryFunc, 
-    NtWriteVirtualMemoryFunc, NtProtectVirtualMemoryFunc, 
-    RtlCreateUserThreadFunc);
-```
-
 
 ## Detections
 0/38 on KleenScan
