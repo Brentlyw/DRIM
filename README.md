@@ -26,11 +26,12 @@ The injection routine utilizes NT native functions exclusively:
 NtAllocateVirtualMemory  // Memory allocation
 NtWriteVirtualMemory     // Code writing
 NtProtectVirtualMemory   // Permission modification
+NtOpenProcess            // Open handle
 RtlCreateUserThread      // Thread creation
 ```
 
 ### Architecture Support
-- Supports both x64 architecture
+- Supports x64 architecture
 - Architecture-specific handling for stack pointer access
 
 ## Technical Notes
