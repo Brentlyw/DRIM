@@ -5,7 +5,7 @@ DRIM is a x64 Windows shellcode injection framework that utilizes unique evasion
 
 ## Technical Details
 
-### Core Components
+### Features
 - Runtime key generation using system specific & time values
 - Debug register manipulation for dynamic API enumeration
 - Vectored exception handling for address decryption
@@ -19,7 +19,7 @@ DRIM resolves functions by encrypting legitimate addresses and storing them in C
 The target's PID resolution is performed through PDH queries rather than conventional process enumeration, window enumeration or snapshots. This approach provides enhanced evasion by avoiding commonly signatured code, and monitored Windows APIs.
 
 ### Injection Method
-The injection routine utilizes NT native functions exclusively:
+The injection routine utilizes these NT native functions:
 ```c
 NtAllocateVirtualMemory  // Memory allocation
 NtWriteVirtualMemory     // Code writing
@@ -30,6 +30,9 @@ RtlCreateUserThread      // Thread creation
 
 ### Architecture Support
 - Supports x64 architecture
+
+### To Do
+- Implement sleep hook, trampoline for sleep obfuscation / call stack spoofing (90% Completed)
 
 ## Technical Notes
 
@@ -52,4 +55,4 @@ LONG WINAPI VectoredHandler(PEXCEPTION_POINTERS pExceptionInfo)
 ```
 
 ## Detections
-0/38 on KleenScan
+[0/38 on KleenScan](https://kleenscan.com/scan_result/4020b9f5be00fd12ec831b220d835e810dae8af145c1e4131eca9302d524a2f9)
