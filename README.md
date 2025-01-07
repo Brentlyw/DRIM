@@ -6,53 +6,23 @@ DRIM is a x64 Windows shellcode injection framework that utilizes unique evasion
 ## Technical Details
 
 ### Features
-- Runtime key generation using system specific & time values
+- Pseudo-random runtime key generation using system specific & time values
 - Debug register manipulation for dynamic API enumeration
 - Vectored exception handling for address decryption
 - PDH-based PID enumeration
-- Undocumented NTDLL.DLL Native API injection routine
+- Entire injection routine uses the undocumented NTDLL.DLL Native API alternatives
 
-### Function Resolution
-DRIM resolves functions by encrypting legitimate addresses and storing them in CPU debug registers. The resolution process uses vectored exception handling to decrypt addresses during execution. This method bypasses common API hooking and monitoring while also removing suspiciuous IAT entries.
-
-### Target PID Resolution
-The target's PID resolution is performed through PDH queries rather than conventional process enumeration, window enumeration or snapshots. This approach provides enhanced evasion by avoiding commonly signatured code, and monitored Windows APIs.
-
-### Injection Method
-The injection routine utilizes these NT native functions:
-```c
-NtAllocateVirtualMemory  // Memory allocation
-NtWriteVirtualMemory     // Code writing
-NtProtectVirtualMemory   // Permission modification
-NtOpenProcess            // Open handle
-RtlCreateUserThread      // Thread creation
-```
-
+### Extras
+- Includes payload obfuscator (py script)
+- Includes string obfuscator (py script)
+- Includes .bin -> char array (py script)
 ### Architecture Support
 - Supports x64 architecture
 
 ### To Do
 - Implement sleep hook, trampoline for sleep obfuscation / call stack spoofing (90% Completed)
 
-## Technical Notes
-
-### API String Obfuscation
-Function names and DLL strings are obfuscated through arithmetic operations. The python file included performs string->obfuscated char array:
-```c
-char g_dll[] = {(((224-4)<<1)>>2), ..}; // "ntdll.dll"
-```
-
-### Debug Register Configuration
-Debug registers are configured through thread context manipulation:
-```c
-ctx.ContextFlags = CONTEXT_DEBUG_REGISTERS | CONTEXT_ALL;
-```
-
-### Exception Handling
-Vectored exception handler processes EXCEPTION_SINGLE_STEP exceptions for address resolution:
-```c
-LONG WINAPI VectoredHandler(PEXCEPTION_POINTERS pExceptionInfo)
-```
 
 ## Detections
-[0/38 on KleenScan](https://kleenscan.com/scan_result/4020b9f5be00fd12ec831b220d835e810dae8af145c1e4131eca9302d524a2f9)
+[0/38 on KleenScan](https://kleenscan.com/scan_result/2a964980b488ced30f923fc04c19a8a81b6b13ee5d8ae84fc21c7b30b6ebfd47)  
+*UPX* [2/38 on KleenScan](https://kleenscan.com/scan_result/4cdd9b456c12bf20e73b23d58e19a5469ba7efffa08f3aa8939cb639b26b955d)
